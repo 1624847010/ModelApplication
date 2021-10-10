@@ -1,8 +1,7 @@
-package com.ll.myapplication;
+package com.ll.myapplication.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +9,7 @@ import java.util.Map;
  * @Author: ll
  * @CreateTime: 2021/10/09 09:51
  */
-public class ReportModel {
+public class PrototypeModel {
 
     public static void main(String[] args) {
         Map<String,String> a = new HashMap<>();

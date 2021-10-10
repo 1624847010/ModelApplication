@@ -1,4 +1,4 @@
-package com.ll.myapplication;
+package com.ll.myapplication.model;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

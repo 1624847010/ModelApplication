@@ -18,7 +18,6 @@ class MyBroadcastReceiver : BroadcastReceiver() {
     }
 
     override fun onReceive(context: Context, intent: Intent) {
-
         Toast.makeText(context, intent.getStringExtra("data"), Toast.LENGTH_LONG).show()
 
 //        StringBuilder().apply {
