@@ -1,21 +1,15 @@
 package com.ll.myapplication
 
-import android.Manifest
-import android.content.BroadcastReceiver
-import android.content.Intent
-import android.content.IntentFilter
-import android.net.ConnectivityManager
-import androidx.appcompat.app.AppCompatActivity
+import android.content.*
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.ll.myapplication.databinding.ActivityMainBinding
-import java.io.File
-import java.util.concurrent.Executors
+import com.ll.myapplication.ui.PermissionActivity
+import com.ll.myapplication.ui.coroutine.CoroutineActivity
+import com.ll.myapplication.ui.databinding.DatabindingActivity
+import com.ll.myapplication.ui.shape.ShapeActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,28 +19,72 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
-    val br: BroadcastReceiver = MyBroadcastReceiver()
-
+    private val br: BroadcastReceiver = MyBroadcastReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        initBar()
         val filter = IntentFilter().apply {
             addAction(TAG)
         }
 
         registerReceiver(br, filter)
 
-        binding.sendBroadcast.setOnClickListener {
-            Intent().also { intent ->
-                intent.action = TAG
-                intent.putExtra("data", "Notice me senpai!")
-                sendBroadcast(intent)
+        with(binding){
+            sendBroadcast.setOnClickListener {
+                Intent().also { intent ->
+                    intent.action = TAG
+                    intent.putExtra("data", "Notice me senpai!")
+                    sendBroadcast(intent)
+                }
             }
 
-        }
+            val intent = Intent(this@MainActivity,MyService::class.java)
+            startService.setOnClickListener {
+                startService(intent)
+            }
+            stopService.setOnClickListener {
+                stopService(intent)
+            }
 
+            btDatabinding.setOnClickListener {
+                startActivity(Intent(this@MainActivity,DatabindingActivity::class.java))
+            }
+
+            btShape.setOnClickListener {
+                startActivity(Intent(this@MainActivity,ShapeActivity::class.java))
+            }
+
+            btCoroutine.setOnClickListener {
+                startActivity(Intent(this@MainActivity,CoroutineActivity::class.java))
+            }
+
+            btPermission.setOnClickListener {
+                startActivity(Intent(this@MainActivity,PermissionActivity::class.java))
+            }
+        }
+    }
+
+    private fun initBar(){
+        ViewCompat.getWindowInsetsController(binding.root)?.apply {
+            //显示状态栏
+            show(WindowInsetsCompat.Type.statusBars())
+            //状态栏文字颜色改为黑色,默认白
+//            isAppearanceLightStatusBars = true
+            //隐藏状态栏,(状态栏会变黑)
+//            hide(WindowInsetsCompat.Type.statusBars())
+            //隐藏状态栏 导航栏,(状态栏会变黑)
+//            hide(WindowInsetsCompat.Type.systemBars())
+            //显示所有系统栏
+//            show(WindowInsetsCompat.Type.systemBars())
+            //导航栏隐藏时手势操作
+            //systemBarsBehavior有三个值：
+            //BEHAVIOR_SHOW_BARS_BY_SWIPE
+            //BEHAVIOR_SHOW_BARS_BY_TOUCH
+            //BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+//            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_BARS_BY_SWIPE
+        }
     }
 
     override fun onDestroy() {
