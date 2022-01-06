@@ -1,4 +1,4 @@
-package com.ll.myapplication.ui
+package com.ll.myapplication.ui.permission
 
 import android.Manifest
 import android.os.Build

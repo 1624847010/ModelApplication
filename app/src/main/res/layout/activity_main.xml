@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:constraint_referenced_ids="send_broadcast
-        ,start_service,stop_service,bt_databinding,bt_shape,bt_coroutine,bt_permission"
+        ,start_service,stop_service,bt_databinding,bt_shape,bt_coroutine,bt_permission,bt_compose
+            ,bt_handler"
         app:flow_horizontalGap="10dp"
         app:flow_verticalGap="10dp"
         app:flow_wrapMode="aligned"
@@ -67,4 +68,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="requestPermission" />
+
+    <Button
+        android:id="@+id/bt_compose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="compose" />
+
+    <Button
+        android:id="@+id/bt_handler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="handler" />
 </androidx.constraintlayout.widget.ConstraintLayout>

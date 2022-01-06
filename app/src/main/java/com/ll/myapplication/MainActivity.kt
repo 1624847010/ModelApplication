@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ll.myapplication.databinding.ActivityMainBinding
-import com.ll.myapplication.ui.PermissionActivity
+import com.ll.myapplication.ui.HandlerActivity
+import com.ll.myapplication.ui.compose.ComposeActivity
+import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.coroutine.CoroutineActivity
 import com.ll.myapplication.ui.databinding.DatabindingActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
@@ -61,7 +63,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             btPermission.setOnClickListener {
-                startActivity(Intent(this@MainActivity,PermissionActivity::class.java))
+                startActivity(Intent(this@MainActivity, PermissionActivity::class.java))
+            }
+
+            btCompose.setOnClickListener {
+                startActivity(Intent(this@MainActivity, ComposeActivity::class.java))
+            }
+
+            btHandler.setOnClickListener {
+                startActivity(Intent(this@MainActivity, HandlerActivity::class.java))
             }
         }
     }
