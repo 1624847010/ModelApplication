@@ -1,13 +1,12 @@
 package com.ll.myapplication.ui
 
-import android.annotation.SuppressLint
 import android.os.*
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.LogUtils
 import com.ll.myapplication.databinding.ActivityHandlerBinding
-import kotlin.concurrent.thread
 
-//子线程中looper为空
+//Looper类用来为一个线程开启一个消息循环 一个线程只能有一个Looper，对应一个MessageQueue。
+//子线程中当前Looper为空    默认情况下android中新诞生的线程是没有开启消息循环的。（主线程除外，主线程系统会自动为其创建Looper对象，开启消息循环。）
 //HandlerThread.looper等价于在子线程中先使用Looper.prepare
 //Handler参数为空会默认获取当前looper
 //Looper类用来为一个线程开启一个消息循环
