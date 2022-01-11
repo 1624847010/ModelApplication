@@ -18,25 +18,57 @@ class CoroutineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         lifecycleScope.launch {
-            LogUtils.d("lifecycleScope")
+            //main
+            //没设置 纯纯的主线程
+            LogUtils.d("1")
 
-            val a =async {
+            //DefaultDispatcher-worker-2
+            //那肯定是子线程了
+            val a = async(Dispatchers.IO) {
                 delay(1000)
-                1+1
+                LogUtils.d("async")
+                "async"
             }
 
+            // DefaultDispatcher-worker-3
+            //那肯定是子线程了
+            launch(Dispatchers.IO) {
+                Thread.sleep(2000)
+                LogUtils.d("5")
+            }
+
+            // DefaultDispatcher-worker-3
+            //那肯定是子线程了
             launch(Dispatchers.IO) {
                 delay(2000)
-                LogUtils.d("launch1")
+                LogUtils.d("6")
             }
 
+            //DefaultDispatcher-worker-4
+            //那肯定是子线程了
             launch(Dispatchers.Default) {
-                LogUtils.d("launch2")
+                LogUtils.d("2")
             }
 
+            //DefaultDispatcher-worker-5
+            //那肯定是子线程了
+            launch(Dispatchers.IO) {
+                LogUtils.d("3" + su())
+            }
+
+            //main
             launch {
-                LogUtils.d("launch3"+a.await())
+                //纯纯的主线程
+                LogUtils.d("4" + a.await())
             }
         }
+    }
+
+    //DefaultDispatcher-worker-5
+    //分配了一个默认线程 并不在主线程当中
+    private suspend fun su(): String {
+        delay(1000)
+        LogUtils.d("suspend")
+        return "suspend"
     }
 }
