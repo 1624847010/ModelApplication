@@ -18,9 +18,6 @@ class CoroutineActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         lifecycleScope.launch {
-            //main
-            //没设置 纯纯的主线程
-            LogUtils.d("1")
 
             //DefaultDispatcher-worker-2
             //那肯定是子线程了
@@ -30,28 +27,18 @@ class CoroutineActivity : AppCompatActivity() {
                 "async"
             }
 
-            // DefaultDispatcher-worker-3
-            //那肯定是子线程了
-            launch(Dispatchers.IO) {
-                Thread.sleep(2000)
-                LogUtils.d("5")
-            }
-
-            // DefaultDispatcher-worker-3
-            //那肯定是子线程了
-            launch(Dispatchers.IO) {
-                delay(2000)
-                LogUtils.d("6")
-            }
+            //main
+            //没设置 纯纯的主线程
+            LogUtils.d("1")
 
             //DefaultDispatcher-worker-4
-            //那肯定是子线程了
+            //子线程
             launch(Dispatchers.Default) {
                 LogUtils.d("2")
             }
 
             //DefaultDispatcher-worker-5
-            //那肯定是子线程了
+            //子线程
             launch(Dispatchers.IO) {
                 LogUtils.d("3" + su())
             }
@@ -60,6 +47,27 @@ class CoroutineActivity : AppCompatActivity() {
             launch {
                 //纯纯的主线程
                 LogUtils.d("4" + a.await())
+            }
+
+            // DefaultDispatcher-worker-3
+            //子线程
+            launch(Dispatchers.IO) {
+                Thread.sleep(2000)
+                LogUtils.d("5")
+            }
+
+            // DefaultDispatcher-worker-3
+            //子线程
+            launch(Dispatchers.IO) {
+                delay(2000)
+                LogUtils.d("6")
+            }
+
+            //kotlinx.coroutines.DefaultExecutor
+            //子线程
+            launch(Dispatchers.Unconfined) {
+                delay(3000)
+                LogUtils.d("7")
             }
         }
     }
