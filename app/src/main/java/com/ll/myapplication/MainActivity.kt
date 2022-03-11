@@ -5,19 +5,23 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.ll.myapplication.databinding.ActivityMainBinding
 import com.ll.myapplication.ui.HandlerActivity
 import com.ll.myapplication.ui.compose.ComposeActivity
 import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.coroutine.CoroutineActivity
 import com.ll.myapplication.ui.databinding.DatabindingActivity
+import com.ll.myapplication.ui.flow.FlowActivity
+import com.ll.myapplication.ui.livedata.LiveDataActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
+import kotlinx.coroutines.flow.*
 
 class MainActivity : AppCompatActivity() {
 
-   companion object{
-       private const val TAG = "MainActivity"
-   }
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -26,6 +30,19 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        lifecycleScope.launchWhenCreated {
+            flow {
+                emit(0)
+            }.map {
+                "$it"
+            }.onEach {
+                it.toInt()
+            }.onCompletion {
+
+            }
+        }
+
         initBar()
         val filter = IntentFilter().apply {
             addAction(TAG)
@@ -33,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
         registerReceiver(br, filter)
 
-        with(binding){
+        with(binding) {
             sendBroadcast.setOnClickListener {
                 Intent().also { intent ->
                     intent.action = TAG
@@ -42,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            val intent = Intent(this@MainActivity,MyService::class.java)
+            val intent = Intent(this@MainActivity, MyService::class.java)
             startService.setOnClickListener {
                 startService(intent)
             }
@@ -51,15 +68,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             btDatabinding.setOnClickListener {
-                startActivity(Intent(this@MainActivity,DatabindingActivity::class.java))
+                startActivity(Intent(this@MainActivity, DatabindingActivity::class.java))
             }
 
             btShape.setOnClickListener {
-                startActivity(Intent(this@MainActivity,ShapeActivity::class.java))
+                startActivity(Intent(this@MainActivity, ShapeActivity::class.java))
             }
 
             btCoroutine.setOnClickListener {
-                startActivity(Intent(this@MainActivity,CoroutineActivity::class.java))
+                startActivity(Intent(this@MainActivity, CoroutineActivity::class.java))
             }
 
             btPermission.setOnClickListener {
@@ -73,10 +90,17 @@ class MainActivity : AppCompatActivity() {
             btHandler.setOnClickListener {
                 startActivity(Intent(this@MainActivity, HandlerActivity::class.java))
             }
+
+            btLivedata.setOnClickListener {
+                LiveDataActivity.start(this@MainActivity)
+            }
+            btFlow.setOnClickListener {
+                FlowActivity.start(this@MainActivity)
+            }
         }
     }
 
-    private fun initBar(){
+    private fun initBar() {
         ViewCompat.getWindowInsetsController(binding.root)?.apply {
             //显示状态栏
             show(WindowInsetsCompat.Type.statusBars())

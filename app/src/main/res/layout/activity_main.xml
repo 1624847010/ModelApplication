@@ -9,9 +9,7 @@
     <androidx.constraintlayout.helper.widget.Flow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="send_broadcast
-        ,start_service,stop_service,bt_databinding,bt_shape,bt_coroutine,bt_permission,bt_compose
-            ,bt_handler"
+        app:constraint_referenced_ids="send_broadcast,start_service,stop_service,bt_databinding,bt_shape,bt_coroutine,bt_permission,bt_compose,bt_handler,bt_livedata,bt_flow"
         app:flow_horizontalGap="10dp"
         app:flow_verticalGap="10dp"
         app:flow_wrapMode="aligned"
@@ -82,4 +80,18 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="handler" />
+
+    <Button
+        android:id="@+id/bt_livedata"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="livedata" />
+
+    <Button
+        android:id="@+id/bt_flow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="flow" />
 </androidx.constraintlayout.widget.ConstraintLayout>
