@@ -21,12 +21,15 @@ import com.ll.myapplication.demo.BaseApp
 import com.ll.myapplication.demo.Sout
 import com.ll.myapplication.model.Singleton
 import com.ll.myapplication.ui.HandlerActivity
+import com.ll.myapplication.ui.asynctask.AsyncTaskDemo
 import com.ll.myapplication.ui.compose.ComposeActivity
 import com.ll.myapplication.ui.coroutine.Coroutine2Activity
 import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.coroutine.CoroutineActivity
 import com.ll.myapplication.ui.databinding.DatabindingActivity
 import com.ll.myapplication.ui.flow.FlowActivity
+import com.ll.myapplication.ui.infix.InfixDemo
+import com.ll.myapplication.ui.inline.InlineDemo
 import com.ll.myapplication.ui.livedata.LiveDataActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
 import kotlinx.coroutines.flow.*
@@ -44,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
+        InlineDemo.test()
         initBar()
         val filter = IntentFilter().apply {
             addAction(TAG)

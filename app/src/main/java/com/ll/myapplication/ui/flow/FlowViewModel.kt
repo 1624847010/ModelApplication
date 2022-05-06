@@ -48,6 +48,14 @@ class FlowViewModel : ViewModel() {
         t1 == t2
     }
 
+    val flow12 = combine(flow1, flow2) { t1, t2 ->
+        t1 == t2
+    }
+
+    val flow13 = combineTransform(flow1, flow2) { t1, t2 ->
+        emit(t1 == t2)
+    }
+
     //每当上游流产生值的时候都需要重新计算
     val flow7 = flow2.combine(flow1) { t1, t2 ->
         t1 == t2

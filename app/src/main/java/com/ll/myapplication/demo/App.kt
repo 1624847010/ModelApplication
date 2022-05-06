@@ -1,8 +1,6 @@
 package com.ll.myapplication.demo
 
 import com.blankj.utilcode.util.LogUtils
-import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 
 /**
  * @Author: ll
@@ -13,5 +11,6 @@ class App : BaseApp() {
     override fun sout() {
         super.sout()
         LogUtils.d("App")
+
     }
 }
