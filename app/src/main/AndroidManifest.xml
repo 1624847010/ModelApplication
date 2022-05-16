@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EXOApplication">
         <activity
+            android:name=".ui.coordinatorlayout.CoordinatorLayoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.CustomViewActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.coroutine.Coroutine2Activity"
             android:exported="false" />
         <activity

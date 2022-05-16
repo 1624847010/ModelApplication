@@ -23,6 +23,7 @@ import com.ll.myapplication.model.Singleton
 import com.ll.myapplication.ui.HandlerActivity
 import com.ll.myapplication.ui.asynctask.AsyncTaskDemo
 import com.ll.myapplication.ui.compose.ComposeActivity
+import com.ll.myapplication.ui.coordinatorlayout.CoordinatorLayoutActivity
 import com.ll.myapplication.ui.coroutine.Coroutine2Activity
 import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.coroutine.CoroutineActivity
@@ -32,6 +33,7 @@ import com.ll.myapplication.ui.infix.InfixDemo
 import com.ll.myapplication.ui.inline.InlineDemo
 import com.ll.myapplication.ui.livedata.LiveDataActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
+import com.ll.myapplication.ui.view.CustomViewActivity
 import kotlinx.coroutines.flow.*
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +49,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        InlineDemo.test()
         initBar()
         val filter = IntentFilter().apply {
             addAction(TAG)
@@ -106,16 +107,22 @@ class MainActivity : AppCompatActivity() {
             btFlow.setOnClickListener {
                 FlowActivity.start(this@MainActivity)
             }
+            btView.setOnClickListener {
+                CustomViewActivity.start(this@MainActivity)
+            }
+            btCoordinatorLayout.setOnClickListener {
+                CoordinatorLayoutActivity.start(this@MainActivity)
+            }
         }
     }
 
     private fun initBar() {
         window.statusBarColor = Color.TRANSPARENT
-        if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.P)
-        window.attributes.layoutInDisplayCutoutMode =
-            WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+            window.attributes.layoutInDisplayCutoutMode =
+                WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES
 
-        WindowCompat.setDecorFitsSystemWindows(window,false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
 //        WindowInsetsControllerCompat(window,binding.root).apply {
 //            hide(WindowInsetsCompat.Type.statusBars())
 //            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
