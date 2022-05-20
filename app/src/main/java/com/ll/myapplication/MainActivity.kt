@@ -22,6 +22,7 @@ import com.ll.myapplication.demo.Sout
 import com.ll.myapplication.model.Singleton
 import com.ll.myapplication.ui.HandlerActivity
 import com.ll.myapplication.ui.asynctask.AsyncTaskDemo
+import com.ll.myapplication.ui.channel.ChannelTest
 import com.ll.myapplication.ui.compose.ComposeActivity
 import com.ll.myapplication.ui.coordinatorlayout.CoordinatorLayoutActivity
 import com.ll.myapplication.ui.coroutine.Coroutine2Activity
@@ -35,6 +36,7 @@ import com.ll.myapplication.ui.livedata.LiveDataActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
 import com.ll.myapplication.ui.view.CustomViewActivity
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,6 +57,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         registerReceiver(br, filter)
+
+        lifecycleScope.launch {
+            ChannelTest.main()
+        }
 
         with(binding) {
             sendBroadcast.setOnClickListener {
