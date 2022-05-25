@@ -55,7 +55,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initBar()
-        model.aFunction()
+
+        lifecycleScope.launch {
+            ChannelTest.main3()
+        }
+
         val filter = IntentFilter().apply {
             addAction(TAG)
         }

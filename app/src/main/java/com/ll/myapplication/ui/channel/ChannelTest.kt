@@ -2,14 +2,8 @@ package com.ll.myapplication.ui.channel
 
 import com.blankj.utilcode.util.LogUtils
 import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.channels.broadcast
-import kotlinx.coroutines.channels.produce
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.merge
+import kotlinx.coroutines.channels.*
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.selects.select
 
 /**
@@ -30,6 +24,7 @@ object ChannelTest {
             }
         }
     }
+
     object Local : Data()
     object Remote : Data()
 
@@ -49,7 +44,7 @@ object ChannelTest {
         //actor
         launch {
             val actor = actor<String> {
-                LogUtils.d( receive())
+                LogUtils.d(receive())
             }
             delay(1000)
             actor.send("actor")
@@ -60,15 +55,15 @@ object ChannelTest {
             val broadChannel = Channel<String>().broadcast(3)
 
             launch {
-                repeat(4){
+                repeat(4) {
                     delay(1000)
                     broadChannel.send("第${it.inc()}次发送")
                 }
             }
 
-            repeat(5){
+            repeat(5) {
                 launch {
-                    for(v in broadChannel.openSubscription()){
+                    for (v in broadChannel.openSubscription()) {
                         LogUtils.d("${v}: 第${it}接收")
                     }
                 }
@@ -94,7 +89,7 @@ object ChannelTest {
         }
 
         //actor
-        val channel = listOf(
+        val channel1 = listOf(
             Channel<Int>(),
             Channel<Int>(),
             Channel<Int>()
@@ -103,7 +98,7 @@ object ChannelTest {
             repeat(3) {
                 launch {
                     delay(1000L * it)
-                    channel[it].send(1 * it)
+                    channel1[it].send(1 * it)
                 }
             }
         }
@@ -112,8 +107,8 @@ object ChannelTest {
         //channelselect
         launch {
             val result = select<Int> {
-                channel.forEach {
-                    it.onReceive{
+                channel1.forEach {
+                    it.onReceive {
                         it
                     }
                 }
@@ -123,7 +118,7 @@ object ChannelTest {
 
         //flowselect
         launch {
-            listOf(af(),bf())
+            listOf(af(), bf())
                 .map {
                     flow {
                         emit(it.await())
@@ -147,6 +142,70 @@ object ChannelTest {
             job1.onJoin { println("job 1 onJoin") }
             job2.onJoin { println("job 2 onJoin") }
         }
+
+    }
+
+    suspend fun main2() = coroutineScope {
+        val channel = Channel<Int>()
+
+        launch {
+            repeat(3) {
+                delay(100)
+                channel.send(it)
+            }
+        }
+
+        //多个接收者
+        val a =
+            channel.receiveAsFlow()
+        //一个接收者
+//            channel.consumeAsFlow()
+
+        //1 3
+        launch {
+            a.collect {
+                LogUtils.d("launch1: $it")
+            }
+        }
+
+        //2
+        launch {
+            a.collect {
+                LogUtils.d("launch2: $it")
+            }
+        }
+
+    }
+
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    suspend fun main3() = coroutineScope {
+        val a = flowOf(1, 2, 3).produceIn(this)
+
+        for (i in a) {
+            LogUtils.d(i)
+        }
+
+        callbackFlow<Int> {
+            getApi {
+                trySend(it - 1)
+                close()
+            }
+
+
+            awaitClose {
+                LogUtils.d("awaitClose")
+            }
+        }.collect {
+            LogUtils.d(it)
+        }
+
+        channelFlow {
+            getApi {
+                trySend(it)
+            }
+        }.collect {
+            LogUtils.d(it)
+        }
     }
 
     fun CoroutineScope.getLocal() = async {
@@ -167,4 +226,16 @@ object ChannelTest {
         delay(500)
         "b"
     }
+
+    fun getApi(a: MyClick) {
+        Thread.sleep(100)
+        a.invoke(5)
+    }
+
+
+//    interface MyClick {
+//        fun click(i: Int)
+//    }
 }
+
+typealias MyClick = (i: Int) -> Unit
