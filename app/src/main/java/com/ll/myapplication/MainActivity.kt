@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -48,19 +49,18 @@ class MainActivity : AppCompatActivity() {
 
     private val br: BroadcastReceiver = MyBroadcastReceiver()
 
+    private val model by viewModels<MainVM>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initBar()
+        model.aFunction()
         val filter = IntentFilter().apply {
             addAction(TAG)
         }
 
         registerReceiver(br, filter)
-
-        lifecycleScope.launch {
-            ChannelTest.main()
-        }
 
         with(binding) {
             sendBroadcast.setOnClickListener {
