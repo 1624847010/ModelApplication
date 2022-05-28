@@ -14,6 +14,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.LogUtils
 import com.ll.myapplication.databinding.ActivityMainBinding
@@ -36,8 +38,10 @@ import com.ll.myapplication.ui.inline.InlineDemo
 import com.ll.myapplication.ui.livedata.LiveDataActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
 import com.ll.myapplication.ui.view.CustomViewActivity
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicInteger
 
 class MainActivity : AppCompatActivity() {
 
@@ -55,10 +59,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initBar()
-
-        lifecycleScope.launch {
-            ChannelTest.main3()
-        }
+        initData()
 
         val filter = IntentFilter().apply {
             addAction(TAG)
@@ -76,6 +77,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             val intent = Intent(this@MainActivity, MyService::class.java)
+            val a = AtomicInteger()
+            button.setOnClickListener {
+//                model.state.value = !model.state.value
+                model.channel.trySend(a.addAndGet(1)).isSuccess.apply {
+//                    LogUtils.d(it)
+                }
+            }
             startService.setOnClickListener {
                 startService(intent)
             }
@@ -152,6 +160,46 @@ class MainActivity : AppCompatActivity() {
             //BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 //            systemBarsBehavior = WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
+        }
+    }
+
+    private fun initData(){
+        lifecycleScope.launch {
+            //热流一个flow占一个协程
+            launch {
+                //延迟5000ms达到新订阅者效果 会立即返回replay数量的值 replay=2 false false
+//                delay(5000)
+                model.state
+                        //会在被观察的生命周期中进行开始与结束
+//                    .onSubscription { model.state.emit(true) }
+//                    .onStart { LogUtils.d("onStart") }
+//                    .onCompletion { LogUtils.d("onCompletion") }
+                    .flowWithLifecycle(lifecycle,Lifecycle.State.STARTED)
+                    .collect {
+                        LogUtils.d(it)
+                    }
+            }
+
+
+//            launch {
+//                model.state
+//                    .flowWithLifecycle(lifecycle,Lifecycle.State.STARTED)
+//                    .collect {
+//                        LogUtils.d(it)
+//                    }
+//            }
+
+//            launch {
+//                flowOf(1).collect {
+//                    LogUtils.d(it)
+//                }
+//                flowOf(2).collect {
+//                    LogUtils.d(it)
+//                }
+//                flowOf(3).collect {
+//                    LogUtils.d(it)
+//                }
+//            }
         }
     }
 
