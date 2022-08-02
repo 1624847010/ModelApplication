@@ -1,130 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:fillViewport="true"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.helper.widget.Flow
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="send_broadcast,start_service,stop_service,bt_databinding,bt_shape,bt_coroutine,bt_coroutine2,bt_permission,bt_compose,bt_handler,bt_livedata,bt_flow,bt_view,bt_CoordinatorLayout"
-        app:flow_horizontalGap="10dp"
-        app:flow_verticalGap="10dp"
-        app:flow_wrapMode="aligned"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+   <androidx.constraintlayout.widget.ConstraintLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <androidx.constraintlayout.helper.widget.Flow
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           app:constraint_referenced_ids="send_broadcast,start_service,stop_service,bt_databinding,bt_shape,bt_coroutine,bt_coroutine2,bt_permission,bt_compose,bt_handler,bt_livedata,bt_flow,bt_view,bt_CoordinatorLayout,bt_Paging"
+           app:flow_horizontalGap="10dp"
+           app:flow_verticalGap="10dp"
+           app:flow_wrapMode="aligned"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
 
 
-    <Button
-        android:id="@+id/send_broadcast"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="发送广播" />
+       <Button
+           android:id="@+id/send_broadcast"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="发送广播" />
 
-    <Button
-        android:id="@+id/start_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="开启服务" />
+       <Button
+           android:id="@+id/start_service"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="开启服务" />
 
-    <Button
-        android:id="@+id/stop_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="关闭服务" />
+       <Button
+           android:id="@+id/stop_service"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="关闭服务" />
 
-    <Button
-        android:id="@+id/bt_databinding"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="databinding" />
+       <Button
+           android:id="@+id/bt_databinding"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="databinding" />
 
-    <Button
-        android:id="@+id/bt_shape"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="ShapeImage" />
+       <Button
+           android:id="@+id/bt_shape"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="ShapeImage" />
 
-    <Button
-        android:id="@+id/bt_coroutine"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Coroutine" />
+       <Button
+           android:id="@+id/bt_coroutine"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="Coroutine" />
 
-    <Button
-        android:id="@+id/bt_coroutine2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="Coroutine2" />
+       <Button
+           android:id="@+id/bt_coroutine2"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="Coroutine2" />
 
-    <Button
-        android:id="@+id/bt_permission"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="requestPermission" />
+       <Button
+           android:id="@+id/bt_permission"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="requestPermission" />
 
-    <Button
-        android:id="@+id/bt_compose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="compose" />
+       <Button
+           android:id="@+id/bt_compose"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="compose" />
 
-    <Button
-        android:id="@+id/bt_handler"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="handler" />
+       <Button
+           android:id="@+id/bt_handler"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="handler" />
 
-    <Button
-        android:id="@+id/bt_livedata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="livedata" />
+       <Button
+           android:id="@+id/bt_livedata"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="livedata" />
 
-    <Button
-        android:id="@+id/bt_flow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="flow" />
+       <Button
+           android:id="@+id/bt_flow"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="flow" />
 
-    <Button
-        android:id="@+id/bt_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="view" />
+       <Button
+           android:id="@+id/bt_view"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="view" />
 
-    <Button
-        android:id="@+id/bt_CoordinatorLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="CoordinatorLayout" />
+       <Button
+           android:id="@+id/bt_CoordinatorLayout"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="CoordinatorLayout" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:pointerIcon="arrow"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+       <Button
+           android:id="@+id/bt_Paging"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:gravity="center"
+           android:text="Paging" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+       <com.google.android.material.floatingactionbutton.FloatingActionButton
+           android:id="@+id/button"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:pointerIcon="arrow"
+           android:layout_marginEnd="30dp"
+           android:layout_marginBottom="30dp"
+           app:layout_constraintBottom_toBottomOf="parent"
+           app:layout_constraintEnd_toEndOf="parent" />
+
+   </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

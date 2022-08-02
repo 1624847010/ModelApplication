@@ -1,48 +1,41 @@
 package com.ll.myapplication
 
-import android.content.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.View
-import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.LogUtils
 import com.ll.myapplication.databinding.ActivityMainBinding
 import com.ll.myapplication.demo.App
-import com.ll.myapplication.demo.BaseApp
-import com.ll.myapplication.demo.Sout
-import com.ll.myapplication.model.Singleton
 import com.ll.myapplication.ui.HandlerActivity
-import com.ll.myapplication.ui.asynctask.AsyncTaskDemo
-import com.ll.myapplication.ui.channel.ChannelTest
 import com.ll.myapplication.ui.compose.ComposeActivity
 import com.ll.myapplication.ui.coordinatorlayout.CoordinatorLayoutActivity
 import com.ll.myapplication.ui.coroutine.Coroutine2Activity
-import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.coroutine.CoroutineActivity
 import com.ll.myapplication.ui.databinding.DatabindingActivity
 import com.ll.myapplication.ui.flow.FlowActivity
-import com.ll.myapplication.ui.infix.InfixDemo
-import com.ll.myapplication.ui.inline.InlineDemo
 import com.ll.myapplication.ui.livedata.LiveDataActivity
+import com.ll.myapplication.ui.paging.PagingActivity
+import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
 import com.ll.myapplication.ui.view.CustomViewActivity
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.*
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     companion object {
@@ -55,11 +48,18 @@ class MainActivity : AppCompatActivity() {
 
     private val model by viewModels<MainVM>()
 
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(newBase)
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initBar()
         initData()
+
+        App().sout()
 
         val filter = IntentFilter().apply {
             addAction(TAG)
@@ -131,6 +131,9 @@ class MainActivity : AppCompatActivity() {
             btCoordinatorLayout.setOnClickListener {
                 CoordinatorLayoutActivity.start(this@MainActivity)
             }
+            btPaging.setOnClickListener {
+                PagingActivity.start(this@MainActivity)
+            }
         }
     }
 
@@ -163,18 +166,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initData(){
+    private fun initData() {
         lifecycleScope.launch {
             //热流一个flow占一个协程
             launch {
                 //延迟5000ms达到新订阅者效果 会立即返回replay数量的值 replay=2 false false
 //                delay(5000)
                 model.state
-                        //会在被观察的生命周期中进行开始与结束
+                    //会在被观察的生命周期中进行开始与结束
 //                    .onSubscription { model.state.emit(true) }
 //                    .onStart { LogUtils.d("onStart") }
 //                    .onCompletion { LogUtils.d("onCompletion") }
-                    .flowWithLifecycle(lifecycle,Lifecycle.State.STARTED)
+                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
                     .collect {
                         LogUtils.d(it)
                     }

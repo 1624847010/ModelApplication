@@ -2,9 +2,11 @@ package com.ll.myapplication
 
 import android.app.Service
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import com.ll.myapplication.ui.databinding.DatabindingActivity
 
 /**
  * @Author: ll
@@ -20,6 +22,8 @@ class MyService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "onCreate: ")
+
+        application.startActivity(Intent(application, DatabindingActivity::class.java).addFlags(FLAG_ACTIVITY_NEW_TASK))
     }
 
     inner class LocalBinder : Binder() {

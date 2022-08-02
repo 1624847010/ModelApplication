@@ -60,8 +60,7 @@ class LiveDataViewModel(application: Application, val i: Int) : AndroidViewModel
 
 class LiveDataFactory(private val application: Application, private val i: Int) :
     ViewModelProvider.AndroidViewModelFactory(application) {
-
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return LiveDataViewModel(application,i) as T
     }
 }
