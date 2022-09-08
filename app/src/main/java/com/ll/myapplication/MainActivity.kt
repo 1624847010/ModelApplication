@@ -1,5 +1,6 @@
 package com.ll.myapplication
 
+import android.app.SearchManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -7,9 +8,12 @@ import android.content.IntentFilter
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.Lifecycle
@@ -17,7 +21,6 @@ import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.blankj.utilcode.util.LogUtils
 import com.ll.myapplication.databinding.ActivityMainBinding
-import com.ll.myapplication.demo.App
 import com.ll.myapplication.ui.HandlerActivity
 import com.ll.myapplication.ui.compose.ComposeActivity
 import com.ll.myapplication.ui.coordinatorlayout.CoordinatorLayoutActivity
@@ -31,7 +34,6 @@ import com.ll.myapplication.ui.permission.PermissionActivity
 import com.ll.myapplication.ui.shape.ShapeActivity
 import com.ll.myapplication.ui.view.CustomViewActivity
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -48,18 +50,12 @@ class MainActivity : AppCompatActivity() {
 
     private val model by viewModels<MainVM>()
 
-    override fun attachBaseContext(newBase: Context?) {
-        super.attachBaseContext(newBase)
-
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         initBar()
+        initToolbar()
         initData()
-
-        App().sout()
 
         val filter = IntentFilter().apply {
             addAction(TAG)
@@ -77,13 +73,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val intent = Intent(this@MainActivity, MyService::class.java)
-            val a = AtomicInteger()
-            button.setOnClickListener {
-//                model.state.value = !model.state.value
-                model.channel.trySend(a.addAndGet(1)).isSuccess.apply {
-//                    LogUtils.d(it)
-                }
-            }
+
             startService.setOnClickListener {
                 startService(intent)
             }
@@ -137,6 +127,45 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun initToolbar() {
+        setSupportActionBar(binding.toolbar)
+    }
+
+    private fun search() {
+//        Toast.makeText(this, "search", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.top_bar, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+
+        (menu.findItem(R.id.search).actionView as SearchView).apply {
+            // Assumes current activity is the searchable activity
+            setSearchableInfo(searchManager.getSearchableInfo(componentName))
+
+            //完成按钮
+            isSubmitButtonEnabled = true
+
+            setIconifiedByDefault(false) // Do not iconify the widget; expand it by default
+        }
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.search -> {
+                true
+            }
+            R.id.search2 -> {
+                onSearchRequested()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initBar() {
         window.statusBarColor = Color.TRANSPARENT
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
@@ -167,43 +196,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initData() {
-        lifecycleScope.launch {
-            //热流一个flow占一个协程
-            launch {
-                //延迟5000ms达到新订阅者效果 会立即返回replay数量的值 replay=2 false false
-//                delay(5000)
-                model.state
-                    //会在被观察的生命周期中进行开始与结束
-//                    .onSubscription { model.state.emit(true) }
-//                    .onStart { LogUtils.d("onStart") }
-//                    .onCompletion { LogUtils.d("onCompletion") }
-                    .flowWithLifecycle(lifecycle, Lifecycle.State.STARTED)
-                    .collect {
-                        LogUtils.d(it)
-                    }
-            }
 
-
-//            launch {
-//                model.state
-//                    .flowWithLifecycle(lifecycle,Lifecycle.State.STARTED)
-//                    .collect {
-//                        LogUtils.d(it)
-//                    }
-//            }
-
-//            launch {
-//                flowOf(1).collect {
-//                    LogUtils.d(it)
-//                }
-//                flowOf(2).collect {
-//                    LogUtils.d(it)
-//                }
-//                flowOf(3).collect {
-//                    LogUtils.d(it)
-//                }
-//            }
-        }
     }
 
     override fun onDestroy() {

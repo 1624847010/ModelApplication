@@ -6,8 +6,5 @@
     android:layout_height="match_parent"
     tools:context=".ui.coordinatorlayout.CoordinatorLayoutActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_behavior="com.google.android.material.transformation.ExpandableBehavior"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

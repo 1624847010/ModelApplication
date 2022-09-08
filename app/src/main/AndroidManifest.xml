@@ -14,6 +14,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EXOApplication">
         <activity
+            android:name=".ui.SearchActivity"
+            android:launchMode="singleTop"
+            android:exported="false" >
+
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+
+        </activity>
+        <activity
             android:name=".ui.paging.PagingActivity"
             android:exported="false" />
         <activity
@@ -54,6 +68,10 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
+
+            <meta-data android:name="android.app.default_searchable"
+                android:value=".ui.SearchActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

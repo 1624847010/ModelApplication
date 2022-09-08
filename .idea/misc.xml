@@ -6,7 +6,11 @@
         <entry key="..\:/SDK/caches/transforms-3/061e4153d390113045f52e9f334e3090/transformed/jetified-exoplayer-ui-2.15.0/res/layout/exo_player_control_view.xml" value="0.29393115942028986" />
         <entry key="..\:/SDK/caches/transforms-3/061e4153d390113045f52e9f334e3090/transformed/jetified-exoplayer-ui-2.15.0/res/layout/exo_styled_player_control_view.xml" value="0.29393115942028986" />
         <entry key="..\:/SDK/caches/transforms-3/061e4153d390113045f52e9f334e3090/transformed/jetified-exoplayer-ui-2.15.0/res/layout/exo_styled_player_view.xml" value="0.29393115942028986" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.332" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/drawable/bg.xml" value="0.3541666666666667" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.332" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/drawable/ic_round_add_24_white.xml" value="0.325" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/drawable/ic_round_menu_24.xml" value="0.325" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_coordinator_layout.xml" value="0.3020833333333333" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_coroutine.xml" value="0.3269927536231884" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_coroutine2.xml" value="0.2753623188405797" />
@@ -18,10 +22,14 @@
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_pagging.xml" value="0.2259963768115942" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_permission.xml" value="0.2504528985507246" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_search.xml" value="0.3066123188405797" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/activity_shape.xml" value="0.3338541666666667" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/item_paging.xml" value="0.2259963768115942" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/layout/my_exo_player_control_view.xml" value="0.29393115942028986" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/menu/bottom_bar.xml" value="0.3255208333333333" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/menu/top_bar.xml" value="0.3255208333333333" />
         <entry key="..\:/Workspace/MyApplication/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.3541666666666667" />
+        <entry key="..\:/Workspace/MyApplication/app/src/main/res/xml/searchable.xml" value="0.3066123188405797" />
       </map>
     </option>
   </component>
